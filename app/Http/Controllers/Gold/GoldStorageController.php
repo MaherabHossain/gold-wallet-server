@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Gold;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\GoldPrice;
-class GoldController extends Controller
+use App\Models\Gold;
+class GoldStorageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,17 @@ class GoldController extends Controller
      */
     public function index()
     {
-        $data['goldPrice'] = GoldPrice::all();
-        
-        return view('gold_price.index',$data);
+        $data['gold'] = Gold::all();
+        $data['total'] = 0;
+    
+        foreach ($data['gold'] as $gold) {
+            if($gold['action']==1){
+                $data['total'] += $gold['quantity'];
+            }else{
+                $data['total'] -= $gold['quantity'];
+            }
+        }
+        return view('gold.index',$data);
     }
 
     /**
@@ -38,16 +46,12 @@ class GoldController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required',
-            'buy_price' => 'required',
-            'sell_price' => 'required',
+            'quantity' => 'required',
+            'action' => 'required',
         ]);
-
-        // return $request->all();
-
-        if(GoldPrice::create($request->all())){
+        if(Gold::create($request->all())){
             return back()
-            ->with('success','Gold Price Added Successfully');
+            ->with('success','Successfull');
         }else{
             return back()
             ->with('success','Something went wrong try again!');
@@ -94,12 +98,11 @@ class GoldController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id)
     {
-        $goldPrice = GoldPrice::find($id);
-        if( $goldPrice->delete()){
-            return redirect()->back()->with('success', 'Gold Price deleted successfully');   
+        $gold = Gold::find($id);
+        if( $gold->delete()){
+            return redirect()->back()->with('success', 'History deleted successfully');   
         }else{
             return redirect()->back()->with('error', 'Something went wrong');   
         }

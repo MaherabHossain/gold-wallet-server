@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\Gold\GoldController;
+use App\Http\Controllers\Gold\GoldStorageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,4 @@ Route::get("/users",[UserController::class,'index'])->name('users');
 Route::delete("/users",[UserController::class,'delete'])->name('users-delete');
 Route::resource('/news', NewsController::class);
 Route::resource('/gold', GoldController::class);
+Route::resource('/gold-storage', GoldStorageController::class);

@@ -4,7 +4,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Gold </h6>
+        <h6 class="m-0 font-weight-bold text-primary">Gold Price</h6>
     </div>
     @if (\Session::has('success'))
     <div class="alert alert-success">
@@ -14,40 +14,40 @@
     </div>
 @endif
     <div class="card-body">
-       
-        <h3>Available Gold: {{ $total }}G</h3>
         <div class="table-responsive">
             <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#exampleModal">
-                Maintain Gold
+                Add Gold price
               </button>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Buy price</th>
+                        <th>Sell price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Date</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Buy price</th>
+                        <th>Sell price</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($gold as $gold)
+                    @foreach ($goldPrice as $goldPrice)
                     <tr>
                         
-                        <td>{{ $gold->created_at }}</td>
-                        <td>{{ $gold->quantity }}G</td>
-                        <td > <b class="{{$gold->action==1?"text-success":"text-danger"}}"> {{ $gold->action==1?"IN":"OUT" }}</td></b>
+                        <td>{{ $goldPrice->date }}</td>
+                        <td>{{ $goldPrice->buy_price }}</td>
+                        <td>{{ $goldPrice->sell_price }}</td>
                         <td>
-                            <form action="{{route("gold-storage.destroy",['gold_storage'=>$gold->id])}}" method="POST">
+                            <form action="{{route("gold.destroy",['gold'=>$goldPrice->id])}}" method="POST">
                                 @csrf
                                 @method("delete")
+                                
+                               
                                 <button onclick="return confirm('Are you sure')" class="btn btn-danger mb-1 btn-sm"> <i class="fa fa-trash"></i> </button>
                            </form>
                         </td>
@@ -71,25 +71,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{{  route("gold-storage.store") }}" method="post" >
+          <form action="{{  route("gold.store") }}" method="post" >
             @csrf
             <div class="form-group">
-                <input type="text" name="quantity" id="" placeholder="Quantity in gram" class="form-control"> 
+                <input type="text" name="buy_price" id="" placeholder="Buy price" class="form-control">
+            
+                
                 <br>
+                <input type="text" name="sell_price" id="" placeholder="Sell Price" class="form-control">
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Action</label>
-                    <select name="action" class="form-control" >
-                        <option value="">Select</option>
-                        <option value="1">In</option>
-                        <option value="2">Out</option>
-                       
-                      </select>
+                    <label for="exampleInputPassword1">Date</label>
+                    <input type="date" name="date" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>   
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Add Gold Price</button>
         </div>
     </form>
       </div>

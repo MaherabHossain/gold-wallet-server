@@ -99,11 +99,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Gold Price</span>
+                    <span>Gold </span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route("gold.index") }}">Gold Price</a>
+                        <a class="collapse-item" href="{{ route("gold.index") }}">Gold</a>
+                        <a class="collapse-item" href="{{ route("gold-storage.index") }}">Gold Price</a>
+                        
                     </div>
                 </div>
             </li>
