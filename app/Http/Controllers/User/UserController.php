@@ -39,11 +39,13 @@ class UserController extends Controller
         if($request->email && $request->password){
         //    work here
         if(!Auth::attempt(['email'=>$formData['email'],'password'=>$formData['password']])){
-            return response()->json(['email'=>$formData['email'],'password'=>$formData['password']],500 );
+            return response()->json(['error'=>"invalid credentials",],500 );
         }else{
             $user = User::where('email',$request->email)->first();
             $token = $user->createToken('authToken')->plainTextToken;
-            return response()->json(['message'=>"log in successfully!",'token'=>$token,'name'=>$user->name,'email'=>$user->email],200 );
+            return response()->json(['message'=>"log in successfully!",'token'=>$token,"user"=>[
+                'name'=>$user->name,'email'=>$user->email
+            ]],200 );
 
 
         }
