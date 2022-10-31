@@ -21,4 +21,5 @@ Route::post('user/login',  [UserController::class,'login'] );
 
 Route::middleware([ 'auth:sanctum'])->group(function () {
     Route::resource('transaction', TransactionController::class);
+    Route::get('/balance', [TransactionController::class,'balance']);
 });

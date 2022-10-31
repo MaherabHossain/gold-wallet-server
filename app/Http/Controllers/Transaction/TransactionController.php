@@ -155,6 +155,12 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function balance(Request $request){
+        $user_id = $request->user();
+        $user =  $request->user();
+        return response()->json(["message"=>"success","data"=>["balance_tk"=>$user->balance_tk,"balance_gold"=>$user->balance_gold]], 200, );
+        
+    }
     public function destroy($id)
     {
         $transaction = Transaction::find($id);
