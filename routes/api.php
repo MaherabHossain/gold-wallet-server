@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Transaction\TransactionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,9 +15,10 @@ use App\Http\Controllers\User\UserController;
 |
 */
 
+
 Route::post('user/create',  [UserController::class,'create'] );
 Route::post('user/login',  [UserController::class,'login'] );
 
 Route::middleware([ 'auth:sanctum'])->group(function () {
-    
+    Route::resource('transaction', TransactionController::class);
 });

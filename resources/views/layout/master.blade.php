@@ -109,6 +109,19 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#headingTransaction"
+                    aria-expanded="true" aria-controls="headingTransaction">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Transaction </span>
+                </a>
+                <div id="headingTransaction" class="collapse" aria-labelledby="headingTransaction" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route("transaction.index.admin") }}">Transactions</a>
+                        
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">

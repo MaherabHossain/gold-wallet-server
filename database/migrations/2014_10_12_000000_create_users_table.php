@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('nid_no')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('balance_tk')->default("0");
+            $table->string('balance_gold')->default("0");
             $table->rememberToken();
             $table->timestamps();
         });
