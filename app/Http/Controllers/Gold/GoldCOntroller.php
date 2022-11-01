@@ -19,6 +19,12 @@ class GoldController extends Controller
         return view('gold_price.index',$data);
     }
 
+    public function goldPrice(){
+        $goldPrice = goldPrice::all();
+
+        return response()->json(["message"=>"success","data"=>$goldPrice], 200,);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Transaction\TransactionController;
+use App\Http\Controllers\Gold\GoldController;
+use App\Http\Controllers\News\NewsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +24,6 @@ Route::post('user/login',  [UserController::class,'login'] );
 Route::middleware([ 'auth:sanctum'])->group(function () {
     Route::resource('transaction', TransactionController::class);
     Route::get('/balance', [TransactionController::class,'balance']);
+    Route::get('/gold-price',[GoldController::class,'goldPrice']);
+    Route::get('/news',[NewsController::class,"getNews"]);
 });

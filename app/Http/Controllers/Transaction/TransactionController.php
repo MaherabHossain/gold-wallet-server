@@ -116,7 +116,6 @@ class TransactionController extends Controller
             $balance_tk = $user->balance_tk;
             $balance_tk += $transaction->amount;
             $user->balance_tk = $balance_tk;
-
             if($user->save()){
                 $transaction->isApprove = 1;
                 if($transaction->save()){
@@ -127,7 +126,6 @@ class TransactionController extends Controller
             }else{
                 return redirect()->back()->with('success', 'Something went wrong try again');   
             }
-            
             // $amount = $user->
         }else{
             // withdraw
@@ -156,7 +154,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function balance(Request $request){
-        $user_id = $request->user();
+        
         $user =  $request->user();
         return response()->json(["message"=>"success","data"=>["balance_tk"=>$user->balance_tk,"balance_gold"=>$user->balance_gold]], 200, );
         

@@ -29,6 +29,11 @@ class NewsController extends Controller
         //
     }
 
+    public function getNews(){
+        $news = News::all();
+        return response()->json(["message"=>"success","data"=>$news], 200, );
+    }
+
     /**
      * Store a newly created resource in storage.
      *
