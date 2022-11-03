@@ -18,6 +18,7 @@ class CreateGoldTable extends Migration
             $table->string('quantity');
             $table->string('action');
             $table->string('total')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

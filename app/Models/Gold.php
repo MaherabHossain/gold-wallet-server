@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Gold extends Model
 {
@@ -12,4 +13,8 @@ class Gold extends Model
         'quantity',
         'action',
     ];
+    public function user(){
+
+    	return $this->belongsTo(User::class);
+    } 
 }

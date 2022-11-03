@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Transaction;
+use App\Models\Gold;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -26,6 +27,10 @@ class User extends Authenticatable
     public function transaction(){
 
     	return $this->belongsTo(Transaction::class);
+    } 
+    public function gold(){
+
+    	return $this->belongsTo(Gold::class);
     } 
 
     /**

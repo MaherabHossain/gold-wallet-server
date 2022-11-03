@@ -19,8 +19,10 @@ class GoldStorageController extends Controller
     
         foreach ($data['gold'] as $gold) {
             if($gold['action']==1){
+                // IN
                 $data['total'] += $gold['quantity'];
             }else{
+                // OUT
                 $data['total'] -= $gold['quantity'];
             }
         }
@@ -56,6 +58,44 @@ class GoldStorageController extends Controller
             return back()
             ->with('success','Something went wrong try again!');
         }
+    }
+
+    public function buyGold(Request $request)
+    {
+        $request->validate([
+            'quantity' => 'required',
+            'action' => 'required',
+        ]);
+        $gold = Gold::all();
+        $available_gold = 0;
+        foreach ($gold as $gold) {
+            if($gold['action']==1 || $gold['action']==4){
+                // IN - Gold available in our system
+                $available_gold += $gold['quantity'];
+            }else{
+                // OUT - Gold out from our system or user buy gold from system
+                $available_gold -= $gold['quantity'];
+            }
+        }
+        $user_id = $request->user()["id"];
+
+        
+
+        if($request->action==3){
+            // buy gold
+            if($available_gold <= $request->quantity){
+                // user can buy gold
+                $user = User::find($user_id);
+                // get latest gold selling price and cut balance from user account
+                // add gold to user account
+            }else{
+                // gold not available
+    
+            }
+        }else{
+            // sell gold
+        }
+        
     }
 
     /**
