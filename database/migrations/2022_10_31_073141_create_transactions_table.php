@@ -29,8 +29,8 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('user_id');
             $table->string("transaction_type");
             $table->string("amount");
-            $table->string("phone_number");
-            $table->string("payment_method");
+            $table->string("phone_number")->nullable();
+            $table->string("payment_method")->nullable();
             $table->string("trx_id")->nullable();
             $table->string("isApprove")->default('0');
             $table->timestamps();

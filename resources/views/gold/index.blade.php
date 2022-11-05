@@ -43,7 +43,33 @@
                         
                         <td>{{ $gold->created_at }}</td>
                         <td>{{ $gold->quantity }}G</td>
-                        <td > <b class="{{$gold->action==1?"text-success":"text-danger"}}"> {{ $gold->action==1?"IN":"OUT" }}</td></b>
+                        <td > <b class="<?php
+                        
+                        if($gold->action==2){
+                          echo "text-danger";
+                        }
+                        elseif ($gold->action==3) {
+                          echo "text-danger";
+                        }else{
+                          echo "text-success";
+                        }
+                        ?>"> 
+                        
+                        <?php 
+                        if($gold->action==1){
+                          echo "IN";
+                        }
+                        if($gold->action==2){
+                          echo "OUT";
+                        }
+                        if($gold->action==3){
+                          echo "SELL";
+                        }
+                        if($gold->action==4){
+                          echo "BUY";
+                        }
+
+                        ?>  </td></b>
                         <td>
                             <form action="{{route("gold-storage.destroy",['gold_storage'=>$gold->id])}}" method="POST">
                                 @csrf

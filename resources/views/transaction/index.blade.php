@@ -43,7 +43,24 @@
                     <tr>
                         <td>{{  $transaction->user->name }}</td>
                         {{-- <td>{{  $transaction->transaction_type }}</td> --}}
-                        <td > <b class="{{$transaction->transaction_type==1?"text-success":"text-danger"}}"> {{ $transaction->transaction_type==1?"DEPOSIT":"WITHDRAW" }}</td></b>
+                        <td > <b class="{{$transaction->transaction_type%2!=0?"text-success":"text-danger"}}"> 
+                        
+                            <?php 
+                            if($transaction->transaction_type==1){
+                              echo "IN";
+                            }
+                            if($transaction->transaction_type==2){
+                              echo "OUT";
+                            }
+                            if($transaction->transaction_type==3){
+                              echo "BUY";
+                            }
+                            if($transaction->transaction_type==4){
+                              echo "SELL";
+                            }
+    
+                            ?> 
+                        </td></b>
                         <td>{{  $transaction->amount }}</td>
                         <td>{{  $transaction->phone_number }}</td>
                         <td>{{  $transaction->payment_method }}</td>
