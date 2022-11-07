@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Transaction;
 use App\Models\Gold;
+use App\Models\MarketPlace;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -31,6 +32,10 @@ class User extends Authenticatable
     public function gold(){
 
     	return $this->belongsTo(Gold::class);
+    } 
+    public function marketPlace(){
+
+    	return $this->belongsTo(MarketPlace::class);
     } 
 
     /**

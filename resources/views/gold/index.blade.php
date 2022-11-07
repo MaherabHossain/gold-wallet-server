@@ -63,10 +63,10 @@
                           echo "OUT";
                         }
                         if($gold->action==3){
-                          echo "SELL";
+                          echo "BUY";
                         }
                         if($gold->action==4){
-                          echo "BUY";
+                          echo "SELL";
                         }
 
                         ?>  </td></b>

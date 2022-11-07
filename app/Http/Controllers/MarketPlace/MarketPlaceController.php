@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Gold;
+namespace App\Http\Controllers\MarketPlace;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\GoldPrice;
-class GoldController extends Controller
+use App\Models\MarketPlace;
+class MarketPlaceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,7 @@ class GoldController extends Controller
      */
     public function index()
     {
-        $data['goldPrice'] = GoldPrice::all();
-        
-        return view('gold_price.index',$data);
-    }
-
-    public function goldPrice(){
-        $goldPrice = goldPrice::all();
-
-        return response()->json(["message"=>"success","data"=>$goldPrice], 200,);
+        //
     }
 
     /**
@@ -44,19 +36,18 @@ class GoldController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required',
-            'buy_price' => 'required',
-            'sell_price' => 'required',
+            'amount' => 'required',
+            'unit_price' => 'required',
         ]);
 
-        // return $request->all();
+        $_data = $request->all();
 
-        if(GoldPrice::create($request->all())){
-            return back()
-            ->with('success','Gold Price Added Successfully');
-        }else{
-            return back()
-            ->with('success','Something went wrong try again!');
+        $data = $_data;
+
+        $data['user_id'] = $request->user()->id;
+
+        if(MarketPlace::create($data)){
+            return response()->json(["status"=>true,"message"=>"sell added successfully","data"=>$_data], 200,  );
         }
     }
 
@@ -82,8 +73,6 @@ class GoldController extends Controller
         //
     }
 
-    
-
     /**
      * Update the specified resource in storage.
      *
@@ -102,14 +91,8 @@ class GoldController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id)
     {
-        $goldPrice = GoldPrice::find($id);
-        if( $goldPrice->delete()){
-            return redirect()->back()->with('success', 'Gold Price deleted successfully');   
-        }else{
-            return redirect()->back()->with('error', 'Something went wrong');   
-        }
+        //
     }
 }

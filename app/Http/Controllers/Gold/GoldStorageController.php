@@ -103,33 +103,39 @@ class GoldStorageController extends Controller
                         $data['amount'] = $amount;
                         Gold::create(['quantity'=>$request->quantity,"action"=>3,"user_id"=>$user_id]);
                         if(Transaction::create($data)){
-                            return response()->json(["status"=>"success","message"=>"gold bought successfully","data"=>$data], 200,  );
+                            return response()->json(["status"=>true,"message"=>"gold bought successfully","data"=>$data], 200,  );
                         }
                     }
                 }else{
-                    return response()->json(["status"=>false,"message"=>"you don't have sufficient balance"], 404);
+                    return response()->json(["status"=>false,"message"=>"you don't have sufficient balance"], 200);
                 }
                 
             }else{
                 // gold not available
-                return response()->json(["status"=>false,"message"=>"this amount of gold not available in the system","available_gold"=>$available_gold], 404);
+                return response()->json(["status"=>false,"message"=>"this amount of gold not available in the system","available_gold"=>$available_gold], 200);
     
             }
         }else{
             $user = User::find($user_id);
+            $gold_balance =  $user->balance_gold;
             $latest_price = GoldPrice::latest()->first();
             // sell gold
             $user->balance_tk = $user->balance_tk+($latest_price->sell_price * $request->quantity);
             $amount = $latest_price->sell_price*$request->quantity;
             $user->balance_gold = $user->balance_gold - $request->quantity;
-            if($user->save()){
-                $data = $request->all();
-                $data['user_id'] = $user_id;
-                $data['transaction_type'] = 4;
-                $data['amount'] = $amount;
-                if(Transaction::create($data)){
-                    return response()->json(["status"=>"success","message"=>"gold sold successfully","data"=>$data], 200,  );
+            if($gold_balance>=$request->quantity){
+                if($user->save()){
+                    $data = $request->all();
+                    $data['user_id'] = $user_id;
+                    $data['transaction_type'] = 4;
+                    $data['amount'] = $amount;
+                    Gold::create(['quantity'=>$request->quantity,"action"=>4,"user_id"=>$user_id]);
+                    if(Transaction::create($data)){
+                        return response()->json(["status"=>true,"message"=>"gold sold successfully","data"=>$data], 200,  );
+                    }
                 }
+            }else{
+                return response()->json(["status"=>false,"message"=>"you don't have sufficient balance"], 200);
             }
         }
         

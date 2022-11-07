@@ -7,6 +7,8 @@ use App\Http\Controllers\Transaction\TransactionController;
 use App\Http\Controllers\Gold\GoldController;
 use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\Gold\GoldStorageController;
+use App\Http\Controllers\MarketPlace\MarketPlaceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,4 +30,5 @@ Route::middleware([ 'auth:sanctum'])->group(function () {
     Route::get('/gold-price',[GoldController::class,'goldPrice']);
     Route::get('/news',[NewsController::class,"getNews"]);
     Route::post('/buy-sell-gold',[GoldStorageController::class,'buyGold']);
+    Route::post('/sell-gold', [MarketPlaceController::class,'store']);
 });
