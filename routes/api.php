@@ -31,4 +31,8 @@ Route::middleware([ 'auth:sanctum'])->group(function () {
     Route::get('/news',[NewsController::class,"getNews"]);
     Route::post('/buy-sell-gold',[GoldStorageController::class,'buyGold']);
     Route::post('/sell-gold', [MarketPlaceController::class,'store']);
+    Route::post('/buy/{id}',[MarketPlaceController::class,'update']);
+    Route::get('/market-place', [MarketPlaceController::class,'index']);
+    Route::get('/user-sell', [MarketPlaceController::class,'userSell']);
+    Route::get('/delete-sell', [MarketPlaceController::class,'destroy']);
 });
