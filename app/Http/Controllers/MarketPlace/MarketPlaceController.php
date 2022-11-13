@@ -15,7 +15,7 @@ class MarketPlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $marketPlace = MarketPlace::all();
+        $marketPlace = MarketPlace::where("isSold","=","0")->get();
         $user_id = $request->user()->id;
         return response()->json(["status"=>true,"message"=>"success","data"=>$marketPlace,'user_id'=>$user_id], 200,);
 
@@ -25,8 +25,8 @@ class MarketPlaceController extends Controller
     public function userSell(Request $request)
     {
         $user_id = $request->user()->id;
-        $marketPlace = MarketPlace::where('user_id',$user_id);
-        return response()->json(["status"=>true,"message"=>"success","data"=>$marketPlace, 200,]);
+        $marketPlace = MarketPlace::where('user_id',$user_id)->get();
+        return response()->json(["status"=>true,"message"=>"success2","data"=>$marketPlace,'user_id'=>$user_id, ],200);
     }
 
     /**
@@ -51,14 +51,13 @@ class MarketPlaceController extends Controller
             'amount' => 'required',
             'unit_price' => 'required',
         ]);
-
         $_data = $request->all();
         $data = $_data;
         $data['user_id'] = $request->user()->id;
         $user_id = $data['user_id'];
         $user = User::find($user_id);
         $gold_balance = $user->balance_gold;
-        if($gold_balance >= $amount){
+        if($gold_balance >= $request->amount){
             if(MarketPlace::create($data)){
                 return response()->json(["status"=>true,"message"=>"sell added successfully","data"=>$_data], 200,  );
             }
@@ -66,6 +65,8 @@ class MarketPlaceController extends Controller
             return response()->json(["status"=>false,"message"=>"you don't have sufficient balance"], 200);
         }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -131,7 +132,7 @@ class MarketPlaceController extends Controller
      */
     public function destroy($id)
     {
-        $gold = Gold::find($id);
+        $gold = MarketPlace::find($id);
         if( $gold->delete()){
             return response()->json(["status"=>true,"message"=>"sell deleted successfully!"], 200);   
         }else{

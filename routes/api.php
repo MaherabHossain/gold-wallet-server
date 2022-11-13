@@ -34,5 +34,5 @@ Route::middleware([ 'auth:sanctum'])->group(function () {
     Route::post('/buy/{id}',[MarketPlaceController::class,'update']);
     Route::get('/market-place', [MarketPlaceController::class,'index']);
     Route::get('/user-sell', [MarketPlaceController::class,'userSell']);
-    Route::get('/delete-sell', [MarketPlaceController::class,'destroy']);
+    Route::get('/delete-sell/{id}', [MarketPlaceController::class,'destroy']);
 });
